@@ -1,0 +1,41 @@
+### Go ###
+
+#
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+.DS_Store
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+coverage.html
+
+# Database file
+*.db
+
+# Directories
+.idea/
+.cache/
+.docker/
+# .vscode/
+build/
+bin/
+docker/
+
+# Files
+*.7z
+*.zip
+.env
+go.work
+translate.*.toml
+*.pem
+*.sh
+!env.sh
+backend
+qodana.yaml
