@@ -1,0 +1,87 @@
+@host = http://127.0.0.1:9000
+@lang = pt
+
+###
+
+# @name login
+POST {{host}}/auth?lang={{lang}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "admin@admin.com",
+  "password": "12345678",
+  "expire": false
+}
+
+> {%
+    client.global.set("accesstoken", response.body.accesstoken);
+%}
+
+###
+
+# @name getAll
+GET {{host}}/user?lang={{lang}}&page=1&limit=5&order=desc&sort=updated_at HTTP/1.1
+Authorization: Bearer {{accesstoken}}
+
+###
+
+# @name getByID
+GET {{host}}/user/{{id}}?lang={{lang}} HTTP/1.1
+Authorization: Bearer {{accesstoken}}
+
+###
+
+# @name create
+POST {{host}}/user?lang={{lang}} HTTP/1.1
+Authorization: Bearer {{accesstoken}}
+Content-Type: application/json
+
+{
+  "email": "user@created.com",
+  "name": "User Created",
+  "profile_id": 1,
+  "status": true
+}
+
+> {%
+    client.global.set("id", response.body.id);
+    client.global.set("mail", response.body.mail);
+%}
+
+###
+
+# @name updateByID
+PUT {{host}}/user/{{id}}?lang={{lang}} HTTP/1.1
+Authorization: Bearer {{accesstoken}}
+Content-Type: application/json
+
+{
+  "email": "user@updated.com",
+  "name": "User Updated",
+  "profile_id": 1,
+  "status": true
+}
+
+###
+
+# @name setUserPassword
+PATCH {{host}}/user/{{mail}}/passw?lang={{lang}} HTTP/1.1
+Authorization: Bearer {{accesstoken}}
+Content-Type: application/json
+
+{
+  "password": "secret",
+  "password_confirm": "secret"
+}
+
+###
+
+# @name resetUserPassword
+PATCH {{host}}/user/{{id}}/reset?lang={{lang}} HTTP/1.1
+Authorization: Bearer {{accesstoken}}
+
+###
+
+# @name deleteByID
+DELETE {{host}}/user/{{id}}?lang={{lang}} HTTP/1.1
+Authorization: Bearer {{accesstoken}}
