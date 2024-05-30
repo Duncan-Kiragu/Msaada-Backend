@@ -1,0 +1,947 @@
+basePath: /
+definitions:
+  dto.AuthInputDTO:
+    properties:
+      expire:
+        example: false
+        type: boolean
+      login:
+        example: admin@admin.com
+        type: string
+      password:
+        example: "12345678"
+        type: string
+    type: object
+  dto.AuthOutputDTO:
+    properties:
+      accesstoken:
+        type: string
+      refreshtoken:
+        type: string
+      user:
+        $ref: '#/definitions/dto.UserOutputDTO'
+    type: object
+  dto.ListItemsOutputDTO:
+    properties:
+      count:
+        type: integer
+      items: { }
+    type: object
+  dto.PasswordInputDTO:
+    properties:
+      password:
+        example: secret
+        type: string
+      password_confirm:
+        example: secret
+        type: string
+    type: object
+  dto.PermissionsInputDTO:
+    properties:
+      product_module:
+        example: true
+        type: boolean
+      profile_module:
+        example: true
+        type: boolean
+      user_module:
+        example: true
+        type: boolean
+    type: object
+  dto.PermissionsOutputDTO:
+    properties:
+      product_module:
+        example: true
+        type: boolean
+      profile_module:
+        example: true
+        type: boolean
+      user_module:
+        example: true
+        type: boolean
+    type: object
+  dto.ProductInputDTO:
+    properties:
+      name:
+        example: Product 01
+        type: string
+    type: object
+  dto.ProductOutputDTO:
+    properties:
+      id:
+        example: 1
+        type: integer
+      name:
+        example: Product 01
+        type: string
+    type: object
+  dto.ProfileInputDTO:
+    properties:
+      name:
+        example: ADMIN
+        type: string
+      permissions:
+        $ref: '#/definitions/dto.PermissionsInputDTO'
+    type: object
+  dto.ProfileOutputDTO:
+    properties:
+      id:
+        example: 1
+        type: integer
+      name:
+        example: ADMIN
+        type: string
+      permissions:
+        $ref: '#/definitions/dto.PermissionsOutputDTO'
+    type: object
+  dto.UserInputDTO:
+    properties:
+      email:
+        example: john.cena@email.com
+        type: string
+      name:
+        example: John Cena
+        type: string
+      profile_id:
+        example: 1
+        type: integer
+      status:
+        example: true
+        type: boolean
+    type: object
+  dto.UserOutputDTO:
+    properties:
+      email:
+        example: john.cena@email.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: John Cena
+        type: string
+      profile:
+        $ref: '#/definitions/dto.ProfileOutputDTO'
+      status:
+        example: true
+        type: boolean
+    type: object
+  httphelper.HTTPResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+info:
+  contact:
+    email: email@email.com
+    name: Raul del Aguila
+  description: Template API.
+  title: Go - Template API
+paths:
+  /:
+    get:
+      description: Ping Pong
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Ping Pong
+      tags:
+        - Ping
+  /auth:
+    get:
+      consumes:
+        - application/json
+      description: User authenticated
+      parameters:
+        - description: User token
+          in: header
+          name: Authorization
+          type: string
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserOutputDTO'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: User authenticated
+      tags:
+        - Auth
+    post:
+      consumes:
+        - application/json
+      description: User authentication
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Credentials model
+          in: body
+          name: credentials
+          required: true
+          schema:
+            $ref: '#/definitions/dto.AuthInputDTO'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.AuthOutputDTO'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      summary: User authentication
+      tags:
+        - Auth
+    put:
+      consumes:
+        - application/json
+      description: User refresh
+      parameters:
+        - description: User token
+          in: header
+          name: Authorization
+          type: string
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.AuthOutputDTO'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      summary: User refresh
+      tags:
+        - Auth
+  /product:
+    get:
+      consumes:
+        - application/json
+      description: Get products
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - example: 10
+          in: query
+          name: limit
+          type: integer
+        - example: descending order 'desc' or ascending order 'asc'
+          in: query
+          name: order
+          type: string
+        - example: 1
+          in: query
+          name: page
+          type: integer
+        - example: name
+          in: query
+          name: search
+          type: string
+        - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+          in: query
+          name: sort
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ListItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Get products
+      tags:
+        - Product
+    post:
+      consumes:
+        - application/json
+      description: Insert product
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Product model
+          in: body
+          name: product
+          required: true
+          schema:
+            $ref: '#/definitions/dto.ProductInputDTO'
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.ProductOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Insert product
+      tags:
+        - Product
+  /product/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: Delete product by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Product ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Delete product by ID
+      tags:
+        - Product
+    get:
+      consumes:
+        - application/json
+      description: Get product by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Product ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ProductOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Get product by ID
+      tags:
+        - Product
+    put:
+      consumes:
+        - application/json
+      description: Update product by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Product ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: Product model
+          in: body
+          name: product
+          required: true
+          schema:
+            $ref: '#/definitions/dto.ProductInputDTO'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ProductOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Update product by ID
+      tags:
+        - Product
+  /profile:
+    get:
+      consumes:
+        - application/json
+      description: Get profiles
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - example: 10
+          in: query
+          name: limit
+          type: integer
+        - example: descending order 'desc' or ascending order 'asc'
+          in: query
+          name: order
+          type: string
+        - example: 1
+          in: query
+          name: page
+          type: integer
+        - example: name
+          in: query
+          name: search
+          type: string
+        - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+          in: query
+          name: sort
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ListItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Get profiles
+      tags:
+        - Profile
+    post:
+      consumes:
+        - application/json
+      description: Insert profile
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Profile model
+          in: body
+          name: profile
+          required: true
+          schema:
+            $ref: '#/definitions/dto.ProfileInputDTO'
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.ProfileOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Insert profile
+      tags:
+        - Profile
+  /profile/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: Delete profile by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Profile ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Delete profile
+      tags:
+        - Profile
+    get:
+      consumes:
+        - application/json
+      description: Get profile by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Profile ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ProfileOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Get profile by ID
+      tags:
+        - Profile
+    put:
+      consumes:
+        - application/json
+      description: Update profile by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: Profile ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: Profile model
+          in: body
+          name: profile
+          required: true
+          schema:
+            $ref: '#/definitions/dto.ProfileInputDTO'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ProfileOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Update profile
+      tags:
+        - Profile
+  /user:
+    get:
+      consumes:
+        - application/json
+      description: Get all users
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - example: 10
+          in: query
+          name: limit
+          type: integer
+        - example: descending order 'desc' or ascending order 'asc'
+          in: query
+          name: order
+          type: string
+        - example: 1
+          in: query
+          name: page
+          type: integer
+        - example: 1
+          in: query
+          name: profile_id
+          type: integer
+        - example: name
+          in: query
+          name: search
+          type: string
+        - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+          in: query
+          name: sort
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ListItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Get users
+      tags:
+        - User
+    post:
+      consumes:
+        - application/json
+      description: Insert user
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: User model
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/dto.UserInputDTO'
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.UserOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Insert user
+      tags:
+        - User
+  /user/{email}/passw:
+    patch:
+      consumes:
+        - application/json
+      description: Set user password by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: User email
+          in: path
+          name: email
+          required: true
+          type: string
+        - description: Password model
+          in: body
+          name: password
+          required: true
+          schema:
+            $ref: '#/definitions/dto.PasswordInputDTO'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      summary: Set user password
+      tags:
+        - User
+  /user/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: Delete user by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Delete user
+      tags:
+        - User
+    get:
+      consumes:
+        - application/json
+      description: Get user by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Get user
+      tags:
+        - User
+    put:
+      consumes:
+        - application/json
+      description: Update user by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: User model
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/dto.UserInputDTO'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserOutputDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Update user
+      tags:
+        - User
+  /user/{id}/reset:
+    patch:
+      consumes:
+        - application/json
+      description: Reset user password by ID
+      parameters:
+        - description: Language responses
+          in: query
+          name: lang
+          type: string
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+        - Bearer: [ ]
+      summary: Reset user password
+      tags:
+        - User
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
