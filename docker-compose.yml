@@ -1,0 +1,49 @@
+name: msaada_backend
+
+volumes:
+
+  msaada_backend_postgres_volume:
+    name: msaada_backend_postgres_volume
+
+networks:
+
+  msaada_backend_network:
+    name: msaada_backend_network
+    driver: bridge
+
+services:
+
+  postgres:
+
+    hostname: postgres
+    container_name: msaada_backend_postgres
+    image: postgres:14.7-alpine
+    restart: always
+    volumes:
+      - msaada_backend_postgres_volume:/var/lib/postgresql/data
+    command: -p ${POSTGRES_PORT}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    environment:
+      - TZ=${TZ}
+      - POSTGRES_DB=${POSTGRES_BASE}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+    networks:
+      - msaada_backend_network
+
+  backend:
+
+    container_name: msaada_backend
+    build: .
+    image: msaada_backend
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - ${API_PORT}:${API_PORT}
+    tty: true
+    environment:
+      - TZ=${TZ}
+    networks:
+      - msaada_backend_network
