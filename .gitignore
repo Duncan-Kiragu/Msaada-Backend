@@ -39,3 +39,6 @@ translate.*.toml
 !env.sh
 backend
 qodana.yaml
+
+env.sh 
+*.sh

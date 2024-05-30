@@ -1,0 +1,83 @@
+[ErrDisabledUser]
+one = "Disabled user."
+other = "Disabled user."
+
+[ErrExpiredToken]
+one = "Expired token."
+other = "Expired token."
+
+[ErrGeneric]
+one = "An unexpected error occurred, try again later."
+other = "An unexpected error occurred, try again later."
+
+[ErrIncorrectPassword]
+one = "Incorrect password."
+other = "Incorrect password."
+
+[ErrInvalidDatas]
+one = "Invalid data, please specify valid data."
+other = "Invalid data, please specify valid data."
+
+[ErrInvalidId]
+one = "Invalid ID, please specify a valid ID."
+other = "Invalid ID, please specify a valid ID."
+
+[ErrInvalidIpAssociation]
+one = "Invalid token ip."
+other = "Invalid token ip."
+
+[ErrManyRequest]
+one = "You have completed many requests in a short period of time! Please wait a minute!"
+other = "You have completed many requests in a short period of time! Please wait a minute!"
+
+[ErrPassUnmatch]
+one = "Passwords does not match."
+other = "Passwords does not match."
+
+[ErrProductNotFound]
+one = "Product not found."
+other = "Product not found."
+
+[ErrProductRegistered]
+one = "Product already registered."
+other = "Product already registered."
+
+[ErrProductUsed]
+one = "Product is being used."
+other = "Product is being used."
+
+[ErrProfileNotFound]
+one = "Profile not found."
+other = "Profile not found."
+
+[ErrProfileRegistered]
+one = "Profile already registered."
+other = "Profile already registered."
+
+[ErrProfileUsed]
+one = "Profile is being used."
+other = "Profile is being used."
+
+[ErrUndefinedColumn]
+one = "Undefined column or parameter name."
+other = "Undefined column or parameter name."
+
+[ErrUserHasPass]
+one = "User already has registered password."
+other = "User already has registered password."
+
+[ErrUserNotFound]
+one = "User not found."
+other = "User not found."
+
+[ErrUserRegistered]
+one = "User already registered."
+other = "User already registered."
+
+[ErrUserUsed]
+one = "User is being used."
+other = "User is being used."
+
+[ErrorNonexistentRoute]
+one = "Route does not exist in this API."
+other = "Route does not exist in this API."

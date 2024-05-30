@@ -1,0 +1,104 @@
+[ErrDisabledUser]
+hash = "sha1-6f92619e8df68b181a32786b61671c4259b7d080"
+one = "Usuário desativado."
+other = "Usuário desativado."
+
+[ErrExpiredToken]
+hash = "sha1-27353fa6a50e456a6769a32a440de65d200e1507"
+one = "Token expirado."
+other = "Token expirado."
+
+[ErrGeneric]
+hash = "sha1-24a4639a3e12cc1b2eac4f2600e82ca022d92a26"
+one = "Um erro inesperado ocorreu, tente novamente mais tarde."
+other = "Um erro inesperado ocorreu, tente novamente mais tarde."
+
+[ErrIncorrectPassword]
+hash = "sha1-b68db3d03e769e4b1f60295b95dcb0e697fe4042"
+one = "Senha incorreta."
+other = "Senha incorreta."
+
+[ErrInvalidDatas]
+hash = "sha1-30840e0fbca47eacbec2e3779f5e7dc09892a524"
+one = "Dados inválidos, especifique dados válidos."
+other = "Dados inválidos, especifique dados válidos."
+
+[ErrInvalidId]
+hash = "sha1-89fb55dd5eefd1dfc0adacc69ef259fb86909cab"
+one = "ID inválido, especifique um ID válido."
+other = "ID inválido, especifique um ID válido."
+
+[ErrInvalidIpAssociation]
+hash = "sha1-c2b908e9792a2bee4f64a69c12a9f9bcc42d0592"
+one = "IP do token inválido."
+other = "IP do token inválido."
+
+[ErrManyRequest]
+hash = "sha1-f7ff8b8f8b7ea58a73ce86ed0c217ac9a392c903"
+one = "Você completou muitas solicitações em um curto período de tempo! Por favor, espere um minuto!"
+other = "Você completou muitas solicitações em um curto período de tempo! Por favor, espere um minuto!"
+
+[ErrPassUnmatch]
+hash = "sha1-33ac6adb3b5f5f0392f6b725e61f7d7b30dc59c4"
+one = "As senhas não correspondem."
+other = "As senhas não correspondem."
+
+[ErrProductNotFound]
+hash = "sha1-a08eaed2b3f56c6a8dda401955b809fe029201b5"
+one = "Produto não encontrado."
+other = "Produto não encontrado."
+
+[ErrProductRegistered]
+hash = "sha1-cec3d5a5f40daf019e1406b6f6ea8423d3f3c01c"
+one = "Produto já cadastrado."
+other = "Produto já cadastrado."
+
+[ErrProductUsed]
+hash = "sha1-c5d7af966ce8987a39a3ba1cf77e72e482eca726"
+one = "Produto em uso."
+other = "Produto em uso."
+
+[ErrProfileNotFound]
+hash = "sha1-3edd089cfb2f27c8ceefa6df25f841b0de9a904a"
+one = "Perfil não encontrado."
+other = "Perfil não encontrado."
+
+[ErrProfileRegistered]
+hash = "sha1-d186f4b958b29ecbbd5e80a242341e0f4361a869"
+one = "Perfil já registrado."
+other = "Perfil já registrado."
+
+[ErrProfileUsed]
+hash = "sha1-2a09ef6c0ce1e7c4210957af3006a18321ee8ff0"
+one = "Perfil em uso."
+other = "Perfil em uso."
+
+[ErrUndefinedColumn]
+hash = "sha1-47646231c538e1513f443c841c96cd9aaa3d0eb9"
+one = "Coluna ou nome de parâmetro indefinido."
+other = "Coluna ou nome de parâmetro indefinido."
+
+[ErrUserHasPass]
+hash = "sha1-1675a153ae7467c3fbb75f1faf28337e99ff2234"
+one = "Usuário já possui senha cadastrada."
+other = "Usuário já possui senha cadastrada."
+
+[ErrUserNotFound]
+hash = "sha1-9c986a39aaffc5e0efbc76c73d7d9ddd22203d56"
+one = "Usuário não encontrado."
+other = "Usuário não encontrado."
+
+[ErrUserRegistered]
+hash = "sha1-920a2d594d6d4bc5001f78221ec3cb1a82d669b0"
+one = "Usuário já registrado."
+other = "Usuário já registrado."
+
+[ErrUserUsed]
+hash = "sha1-255f5135de848ae5704d90f6bf9d6669a9f6ed65"
+one = "Usuário em uso."
+other = "Usuário em uso."
+
+[ErrorNonexistentRoute]
+hash = "sha1-4c182723e22c09e0c90fddbffe7780bf7d0cc4f1"
+one = "A rota não existe nesta API."
+other = "A rota não existe nesta API."
